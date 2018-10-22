@@ -3,7 +3,6 @@ import scipy as sp
 
 from sklearn.decomposition import PCA
 #from sklearn.decomposition import RandomizedPCA# (randomizedpca is deprecated)
-from .decorators import timeit
 
 
 class InvalidNodeIndexError(Exception):
@@ -51,7 +50,6 @@ class Codebook(object):
             self.lattice_distances = (sp.spatial.distance_matrix(coordinates, coordinates)
                                       .reshape(n_rows * n_columns, n_rows, n_columns))
 
-    @timeit()
     def random_initialization(self, data):
         """
         :param data: data to use for the initialization
@@ -62,7 +60,6 @@ class Codebook(object):
         self.matrix = mn + (mx-mn)*(np.random.rand(self.nnodes, data.shape[1]))
         self.initialized = True
 
-    @timeit()
     def pca_linear_initialization(self, data):
         """
         We initialize the map, just by using the first two first eigen vals and

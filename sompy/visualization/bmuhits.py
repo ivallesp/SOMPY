@@ -62,8 +62,12 @@ class BmuHitsView(MapView):
 
             #plt.show()
         elif som.codebook.lattice == "hexa":
-            ax, cents = plot_hex_map(mp[::-1], colormap=cmap, fig=self._fig)
+            ax, cents = plot_hex_map(mp, colormap=cmap, fig=self._fig)
+
             if anotate:
-                self._set_labels(cents, ax, reversed(counts), onlyzeros, labelsize, hex=True)
+                # Horizontally flip the coordinates map to match the components plane plots
+                cents = np.flip(np.array(cents).reshape(som.codebook.mapsize[0], som.codebook.mapsize[1], 2),
+                                axis=1).reshape(-1, 2)
+                self._set_labels(cents, ax, counts, onlyzeros, labelsize, hex=True)
             #plt.show()
         #return ax, cents
